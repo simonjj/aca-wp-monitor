@@ -1,0 +1,58 @@
+[
+    {
+        "type": "D4",
+        "vCPUs": 4,
+        "memoryGB": 16,
+        "category": "General purpose",
+        "billing": "per node"
+    },
+    {
+        "type": "D8",
+        "vCPUs": 8,
+        "memoryGB": 32,
+        "category": "General purpose",
+        "billing": "per node"
+    },
+    {
+        "type": "D16",
+        "vCPUs": 16,
+        "memoryGB": 64,
+        "category": "General purpose",
+        "billing": "per node"
+    },
+    {
+        "type": "D32",
+        "vCPUs": 32,
+        "memoryGB": 128,
+        "category": "General purpose",
+        "billing": "per node"
+    },
+    {
+        "type": "E4",
+        "vCPUs": 4,
+        "memoryGB": 32,
+        "category": "Memory optimized",
+        "billing": "per node"
+    },
+    {
+        "type": "E8",
+        "vCPUs": 8,
+        "memoryGB": 64,
+        "category": "Memory optimized",
+        "billing": "per node"
+    },
+    {
+        "type": "E16",
+        "vCPUs": 16,
+        "memoryGB": 128,
+        "category": "Memory optimized",
+        "billing": "per node"
+    },
+    {
+        "type": "E32",
+        "vCPUs": 32,
+        "memoryGB": 256,
+        "category": "Memory optimized",
+        "billing": "per node"
+    }
+]
