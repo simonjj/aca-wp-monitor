@@ -6,7 +6,7 @@ This is a script designed to monitor and assess the provisioning of Azure Contai
 
 ## Quickstart
 
-This quickstart assumes you have an existing Azure Container App environment already.
+This quickstart assumes you have an existing Azure Container App environment already. We deploy from a ready made container image (`simon.azurecr.io/aca-wp-monitor:latest`) hosted publicly on Azure Container Registry. Image sha256 is `d3b8c78bce7b5f9b77de11fbfdd3534b7308356f09238e2b11992d2b429c45c8`. This job will run every hour at the top of the hour.
 
 ```
 export SUBSCRIPTION_ID=<ACA_ENVIRONMENT_SUBSCRIPTION>
@@ -46,10 +46,10 @@ Once complete the roles screen for the job's managed identity should look simila
 
 
 ## Details and Notes
-- This script is intended to be run as a job and inside the ACA environment you intend to monitor.
-- It uses system assigned managed identity to authenticate itself as both a *Monitoring Metrics Publisher* and *Reader*. These roles will have to be set up.
-- Metrics are published and available on its Metric tab.
-- The script requires the following environment variables to be provided to it `SUBSCRIPTION_ID`, `RESOURCE_GROUP`, `ENVIRONMENT_NAME`. A forth one (`CURRENT_APP_NAME`) will be provided automatically as part of the runtime environment.
+- This script is intended to be run as a job inside the ACA environment you intend to monitor.
+- It uses system assigned managed identity to authenticate itself as both a **Monitoring Metrics Publisher** and **Reader**. These roles will have to be assigned to the managed identity for the job.
+- Metrics are published and available on the job's Metric tab.
+- The script requires the following environment variables to be provided to it `SUBSCRIPTION_ID`, `RESOURCE_GROUP`, `ENVIRONMENT_NAME`. A forth one (`CURRENT_APP_NAME`) will be provided automatically as part of the ACA runtime environment.
 - The script uses [Azure's Python SDK](https://learn.microsoft.com/en-us/azure/developer/python/sdk/azure-sdk-overview).
 
 
@@ -67,19 +67,18 @@ Once complete the roles screen for the job's managed identity should look simila
 | Max Available Memory (GB)       | The maximum amount of memory available if the workload profile would be scaled to the maximum. |
 | Provisioning Assessment         | An assessment of whether Max Scale (CPU or Memory) exceeds Max Available (CPU or Memory). This output gets produced to stdout. |
 
-
-## Usage
-Once gathered metrics become available under the Metrics panel for the job. The metric namespace is *workload profile*. All aggregations show the same number for any collection cycle. Individual workload profile are available via dimensional values and can be access via filters.
-
-![screenshot showing the monitoring panel filter](./misc/aca-monitor-panel.png)
-
-The most high-level view gets provided via the console execution log. In case of a underprovisioned scenario a message following this example will be printed:
-
+### Sample Provisioning Alert Message
+The most high-level output gets provided via the console execution log for the job or app running the script. In case of a underprovisioned scenario a message is printed there and should be altered on.
 ```
 WARNING: Workload Profile mem-pool is underprovisioned: CPU underprovisioned by 4.0 vCPUs. Memory underprovisioned by 38.0 GB.
 ```
 
+## Usage
+Once gathered metrics become available under the Metrics panel for the job. The metric namespace is **workload profile**. All aggregations show the same number for any collection cycle. Individual workload profile are available via dimensional values and can be accessed via filters.
+
+![screenshot showing the monitoring panel filter](./misc/aca-monitor-panel.png)
+
 
 ## Limitations and Todo
-- Only Apps are considered during the assessment. Jobs are currently not part of the assessment.
+- Jobs or Components are currently not part of the assessment.
 - GPU-based workload profiles are not included in the assessment.
