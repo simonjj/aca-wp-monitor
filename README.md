@@ -49,7 +49,7 @@ Once complete the roles screen for the job's managed identity should look simila
 - This script is intended to be run as a job inside the ACA environment you intend to monitor.
 - It uses system assigned managed identity to authenticate itself as both a **Monitoring Metrics Publisher** and **Reader**. These roles will have to be assigned to the managed identity for the job.
 - Metrics are published and available on the job's Metric tab.
-- The script requires the following environment variables to be provided to it `SUBSCRIPTION_ID`, `RESOURCE_GROUP`, `ENVIRONMENT_NAME`. A forth one (`CURRENT_APP_NAME`) will be provided automatically as part of the ACA runtime environment.
+- The script requires the following environment variables to be provided to it `SUBSCRIPTION_ID`, `RESOURCE_GROUP`, `ENVIRONMENT_NAME`. A forth one,  `CONTAINER_APP_JOB_NAME` for jobs, or `CURRENT_APP_NAME` for apps, will be provided automatically as part of the ACA runtime environment.
 - The script uses [Azure's Python SDK](https://learn.microsoft.com/en-us/azure/developer/python/sdk/azure-sdk-overview).
 
 

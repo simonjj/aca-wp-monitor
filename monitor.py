@@ -14,6 +14,7 @@ import json
 from datetime import datetime, timezone
 from copy import deepcopy
 import os
+import sys
 
 CLEANUP_TABLE = str.maketrans({
     " ": "",  # Remove spaces
@@ -78,7 +79,7 @@ def _determine_azure_monitor_metrics_url(aca_client, resource_group_name, enviro
     # if we're still unable to find the app we may lack Reader persmissions on the sub
     if not me_app:
         print(f"ERROR: Could not retrieve app data for {current_app_name}, please check app roles and permissions.")
-        return None
+        sys.exit(1)
     location = me_app.location.translate(CLEANUP_TABLE).lower()
     return f"https://{location}.monitoring.azure.com{me_app.id}/metrics"
 
@@ -334,10 +335,13 @@ def main(subscription_id=None, resource_group=None, environment_name=None, curre
         subscription_id = os.getenv("SUBSCRIPTION_ID", None)
         resource_group = os.getenv("RESOURCE_GROUP", None)
         environment_name = os.getenv("ENVIRONMENT_NAME", None)
-        current_app_name = os.getenv("CURRENT_APP_NAME", None)
+        current_app_name = os.getenv("CONTAINER_APP_JOB_NAME", None)
+        if not current_app_name:
+            current_app_name = os.getenv("CURRENT_APP_NAME", None)
+
     if not subscription_id or not resource_group or not environment_name or not current_app_name:
-        print("Please set SUBSCRIPTION_ID, RESOURCE_GROUP, ENVIRONMENT_NAME and CURRENT_APP_NAME in the environment.")
-        return
+        print("Please set SUBSCRIPTION_ID, RESOURCE_GROUP, ENVIRONMENT_NAME and CONTAINER_APP_JOB_NAME in the environment.")
+        return sys.exit(1)
 
     # connect and gather the data from ACA (data is in pandas DataFrame format)
     aca_client = _get_aca_client(subscription_id)
