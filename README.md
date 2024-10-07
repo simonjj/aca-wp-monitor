@@ -6,7 +6,7 @@ This is a script designed to monitor and assess the provisioning of Azure Contai
 
 ## Quickstart
 
-This quickstart assumes you have an existing Azure Container App environment already. We deploy from a ready made container image (`simon.azurecr.io/aca-wp-monitor:latest`) hosted publicly on Azure Container Registry. Image `sha256` is `6d2f3b10a25511d5af81efa4352b270116a869ff735e4560c44de723da1218ae`. This job will run every hour at the top of the hour.
+This quickstart assumes you have an existing Azure Container App environment already. We deploy from a ready made container image (`simon.azurecr.io/aca-wp-monitor:latest`) hosted publicly on Azure Container Registry. Image `sha256` is `0c7024c471593f6b2f41c21f13e856e3dfc577ba8047314f980df37cbfe5d35c`. This job will run every hour at the top of the hour.
 
 ```
 export SUBSCRIPTION_ID=<ACA_ENVIRONMENT_SUBSCRIPTION>
