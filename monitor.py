@@ -43,11 +43,14 @@ def _get_aca_client(subscription_id):
 
 
 def _get_current_app_replica_count(aca_client, resource_group, app):
-    replicas = aca_client.container_apps_revision_replicas.list_replicas(resource_group, app.name, app.latest_ready_revision_name)
     count = 0
-    for replica in replicas.value:
-        if replica.running_state == "Running":
-            count += 1
+    try:
+        replicas = aca_client.container_apps_revision_replicas.list_replicas(resource_group, app.name, app.latest_ready_revision_name)
+        for replica in replicas.value:
+            if replica.running_state == "Running":
+                count += 1
+    except ValueError as e:
+        pass
     return count
 
 # given a workload profile row we evaluate if it is underprovisioned
